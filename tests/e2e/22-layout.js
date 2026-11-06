@@ -44,7 +44,7 @@ const matrix = DEVICES.filter(d => !ONLY.length || ONLY.includes(d.id)).flatMap(
 );
 
 /* other languages, on the sizes where room is tightest; the locale writes numbers and dates as that phone would */
-const LANG_LOCALE = { de: "de-DE", ru: "ru-RU", "zh-Hans": "zh-CN", es: "es-ES", "pt-BR": "pt-BR", fr: "fr-FR" };
+const LANG_LOCALE = { de: "de-DE", ru: "ru-RU", "zh-Hans": "zh-CN", es: "es-ES", "pt-BR": "pt-BR", fr: "fr-FR", it: "it-IT" };
 Object.assign(LANG_LOCALE, { id: "id-ID", tr: "tr-TR", "en-XA": "en-US" });
 const LANGS = (process.env.LAYOUT_LANGS || "de,ru,zh-Hans").split(",").filter(Boolean);
 const runs = matrix

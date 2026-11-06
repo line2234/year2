@@ -1466,6 +1466,18 @@ input {
 .seg button + button {
   border-left: 1px solid var(--outline);
 }
+/* four choices (Day | Range | Month | Year, Days | Weeks | Months | Years) share the width: a little smaller, so the longer
+   words (Zeitraum, Wochen, Месяцы) still fit on a small phone at the largest text size */
+/* Home: Spending | Income above the ring */
+.seg.kind {
+  margin: 4px auto 4px;
+  width: 240px;
+  max-width: 100%;
+  flex: none;
+}
+.seg4 button {
+  font-size: 0.78rem;
+}
 .seg button[aria-pressed="true"] {
   background: var(--secondary-container);
   color: var(--on-secondary-container);

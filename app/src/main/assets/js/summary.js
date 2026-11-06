@@ -1,6 +1,6 @@
 /*
- * summary.js — The spending summary opened by tapping the donut: 7 days, 8 weeks or one month's categories, with a comparison
- * to the period before.
+ * summary.js — The spending summary opened by tapping the donut: 7 days, 8 weeks, or one month's or one year's categories,
+ * with a comparison to the period before.
  */
 "use strict";
 
@@ -20,11 +20,30 @@ const weekStart = d => addDays(d, -((parseISO(d).getDay() - S.settings.week + 7)
 function summarySheet() {
   const [, e] = range(),
     t = today();
-  SM = { mode: V.period === "month" ? "m" : "d", end: e > t ? t : e, sel: null, cur: viewCur() };
+  SM = {
+    mode: { month: "m", year: "y" }[V.period] || "d",
+    end: e > t ? t : e,
+    sel: null,
+    cur: viewCur(),
+    kind: V.kind === "in" ? "in" : "out",
+  };
   openSheet(
-    T("summary.title") + (currencies().length > 1 ? " · " + SM.cur : ""),
-    '<div class="seg">' +
-      ["d", "w", "m"]
+    smTitle(),
+    '<div class="seg kind">' +
+      ["out", "in"]
+        .map(
+          k =>
+            '<button data-act="sm-kind" data-v="' +
+            k +
+            '" aria-pressed="' +
+            (SM.kind === k) +
+            '">' +
+            TH("donut." + k) +
+            "</button>"
+        )
+        .join("") +
+      '</div><div class="seg seg4">' +
+      ["d", "w", "m", "y"]
         .map(
           k =>
             '<button data-act="sm-mode" data-v="' +
@@ -40,6 +59,8 @@ function summarySheet() {
   );
   smRender();
 }
+/* the sheet's title: what it adds up, and the currency when there are several */
+const smTitle = () => T(SM.kind === "in" ? "donut.in" : "summary.title") + (currencies().length > 1 ? " · " + SM.cur : "");
 /* the buckets on screen, oldest first, plus one before them (for "vs last ...") */
 function smBuckets() {
   const t = today(),
@@ -68,6 +89,12 @@ function smBuckets() {
         }),
       });
     }
+  } else if (SM.mode === "y") {
+    /* this year and the one before it: the chosen one's categories, compared with the year before */
+    for (let i = 1; i >= 0; i--) {
+      const y = String(+e.slice(0, 4) - i);
+      out.push({ s: y + "-01-01", e: y + "-12-31", x: y, full: y });
+    }
   } else {
     const m0 = e.slice(0, 7);
     for (let i = 6; i >= 0; i--) {
@@ -80,7 +107,7 @@ function smBuckets() {
       });
     }
   }
-  const sp = S.txns.filter(x => isSpend(x) && inCur(x, SM.cur));
+  const sp = S.txns.filter(x => (SM.kind === "in" ? x.type === "income" : isSpend(x)) && inCur(x, SM.cur));
   out.forEach(b => {
     b.list = sp.filter(x => x.date >= b.s && x.date <= b.e);
     b.v = rnd(b.list.reduce((q, x) => q + x.amount, 0));
@@ -133,7 +160,7 @@ function smDonut(split, total) {
     '<div class="c"><b>' +
     esc(total ? compact(total) : "0") +
     "</b><span>" +
-    TH("summary.spent") +
+    TH(SM.kind === "in" ? "summary.got" : "summary.spent") +
     "</span></div></div>"
   );
 }
@@ -147,7 +174,7 @@ function drawSm() {
     bars = all.slice(1),
     n = bars.length,
     t = today(),
-    M = SM.mode === "m";
+    M = SM.mode === "m" || SM.mode === "y"; // one period's categories as a donut, not bars
   if (M || SM.sel == null || SM.sel >= n) SM.sel = n - 1;
   const max = Math.max(...bars.map(b => b.v), 0),
     i = SM.sel,
@@ -161,7 +188,7 @@ function drawSm() {
     '">' +
     ic("left") +
     "</button><b>" +
-    esc(capFirst(M ? monthLabel(b.s.slice(0, 7), true) : smSpan(bars))) +
+    esc(SM.mode === "y" ? b.s.slice(0, 4) : capFirst(M ? monthLabel(b.s.slice(0, 7), true) : smSpan(bars))) +
     '</b><button class="icon" data-act="sm-nav" data-v="1" aria-label="' +
     TH("summary.later") +
     '"' +
@@ -238,11 +265,13 @@ function drawSm() {
     cmp = T("summary." + (p === 0 ? "same" : p > 0 ? "up" : "down") + "." + SM.mode, { pct: percent(Math.abs(p)) });
   }
   const avg = SM.mode !== "d" && b.days > 0 && b.v ? T("summary.avg", { amount: money(rnd(b.v / b.days), cur) }) : "";
-  const top = M ? split : split.slice(0, 3);
+  const top = split; // every category: a tap on one lists its transactions in History
   h +=
     '<div class="smd">' +
     (M ? "" : '<div class="muted small">' + esc(b.full) + "</div>") +
-    '<div class="big spent">' +
+    '<div class="big ' +
+    (SM.kind === "in" ? "got" : "spent") +
+    '">' +
     esc(money(b.v, cur)) +
     "</div>" +
     (cmp || avg ? '<div class="muted small">' + esc([avg, cmp].filter(Boolean).join(" · ")) + "</div>" : "") +
@@ -255,7 +284,9 @@ function drawSm() {
           const c = cat(k),
             p = (v / b.v) * 100;
           return (
-            '<div class="tx">' +
+            '<button class="tx" data-act="sm-cat" data-v="' +
+            esc(k) +
+            '">' +
             emblem(c, "em") +
             '<span class="mid"><div class="d" dir="auto">' +
             esc(catName(c)) +
@@ -268,7 +299,7 @@ function drawSm() {
             c.c +
             '"></span></span></span><span class="a">' +
             esc(money(v, cur)) +
-            "</span></div>"
+            "</span></button>"
           );
         })
         .join("") +
@@ -276,7 +307,7 @@ function drawSm() {
   else
     h +=
       '<div class="empty" style="padding:16px">' +
-      TH("summary.none." + SM.mode, { month: monthLabel(b.s.slice(0, 7)) }) +
+      TH((SM.kind === "in" ? "summary.noneIn." : "summary.none.") + SM.mode, { month: monthLabel(b.s.slice(0, 7)), year: b.s.slice(0, 4) }) +
       "</div>";
   h +=
     '<div class="gap"></div><button class="btn tonal" data-act="sm-open">' +
@@ -291,10 +322,35 @@ function smNav(d) {
   let e = SM.end;
   if (SM.mode === "d") e = addDays(e, 7 * d);
   else if (SM.mode === "w") e = addDays(e, 56 * d);
+  else if (SM.mode === "y") e = +e.slice(0, 4) + d + "-12-31";
   else e = monthEnd(shiftMonth(e.slice(0, 7), d));
   SM.end = e > t ? t : e;
   SM.sel = null;
   smRender();
+}
+/* a category of the sheet's period: History, on that period, listing only its transactions */
+function smCat(k) {
+  const b = smBuckets().slice(1)[SM.sel],
+    t = today();
+  if (!b || !S.cats.some(c => c.id === k)) return;
+  if (SM.mode === "d") {
+    HP.period = "day";
+    HP.anchor = b.s;
+  } else if (SM.mode === "w") {
+    HP.period = "range";
+    HP.rs = b.s;
+    HP.re = b.e > t ? t : b.e;
+  } else {
+    HP.period = SM.mode === "y" ? "year" : "month";
+    HP.anchor = b.s;
+  }
+  V.hCat = k;
+  V.hAcc = "";
+  V.sel = null;
+  closeSheet();
+  V.screen = "history";
+  render();
+  scrollTo(0, 0);
 }
 function smOpen() {
   const b = smBuckets().slice(1)[SM.sel],
@@ -308,9 +364,10 @@ function smOpen() {
     V.rs = b.s;
     V.re = b.e > t ? t : b.e;
   } else {
-    V.period = "month";
+    V.period = SM.mode === "y" ? "year" : "month";
     V.anchor = b.s;
   }
+  V.kind = SM.kind; // Home then shows the same thing: the ring of what was spent, or of what came in
   closeSheet();
   render();
 }

@@ -58,6 +58,7 @@ const ok = (c, m) => {
 
   // ---- 1. motion: calm
   const pressed = async sel => {
+    await page.evaluate(s => document.querySelector(s).scrollIntoView({ block: "center" }), sel); // below the fold on a short phone
     const b = await box(sel);
     const x = b.x + b.width / 2,
       y = b.y + b.height / 2;

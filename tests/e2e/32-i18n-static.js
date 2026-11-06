@@ -19,6 +19,7 @@ const same = (a, b) => JSON.stringify([...a].sort()) === JSON.stringify([...b].s
 const ANDROID = {
   en: "values",
   es: "values-es",
+  it: "values-it",
   "pt-BR": "values-pt",
   fr: "values-fr",
   de: "values-de",
@@ -30,6 +31,7 @@ const ANDROID = {
 const STORE = {
   en: "en-US",
   es: "es-ES",
+  it: "it-IT",
   "pt-BR": "pt-BR",
   fr: "fr-FR",
   de: "de-DE",

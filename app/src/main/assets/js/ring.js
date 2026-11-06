@@ -47,7 +47,9 @@ function cycleDonut() {
 function ringHTML(cats, o) {
   const home = o.mode === "home",
     W = Math.max(240, RINGW || $("#app").clientWidth - 24),
-    L = ringLayout(Math.max(cats.length, 1), W);
+    L = ringLayout(Math.max(cats.length, 1), W),
+    inc = home && o.kind === "in",
+    den = inc ? o.got : o.spent; /* what the slices and percentages are shares of */
   const { u, D, cx, cy, H } = L,
     rows = home ? 1.3 + 1.1 : 1.3, // line heights under the icon: the name, and on Home its % (see .rt .cn / .cp)
     /* label size: from the tile size and following the phone's text size like the rest; 10px at least, 9px in a full
@@ -102,8 +104,8 @@ function ringHTML(cats, o) {
       '"' +
       (home
         ? ' aria-label="' +
-          (v
-            ? TH("ring.addShare", { cat: catName(p.c), share: percent(Math.max(1, Math.round((v / o.spent) * 100))) })
+          (v && !inc
+            ? TH("ring.addShare", { cat: catName(p.c), share: percent(Math.max(1, Math.round((v / den) * 100))) })
             : TH("ring.add", { cat: catName(p.c) })) +
           '"'
         : "") +
@@ -114,7 +116,7 @@ function ringHTML(cats, o) {
         ? '<span class="cp" style="color:' +
           inkOn(p.c.c) + // the category's colour, readable on the surface
           '">' +
-          (v ? esc(percent(Math.max(1, Math.round((v / o.spent) * 100)))) : "") +
+          (v ? esc(percent(Math.max(1, Math.round((v / den) * 100)))) : "") +
           "</span>"
         : "") +
       "</button>"
@@ -126,12 +128,12 @@ function ringHTML(cats, o) {
   let segs = "",
     lines = "",
     rot = -90;
-  if (home && o.spent > 0) {
+  if (home && den > 0) {
     /* slices follow the tiles clockwise (not size), so leader lines never cross */
     const posOf = id => pos.find(p => p.c.id === id);
     const ent = Object.entries(o.by)
       .filter(([, v]) => v > 0)
-      .map(([id, v]) => ({ id, v, w: v / o.spent, p: posOf(id) }))
+      .map(([id, v]) => ({ id, v, w: v / den, p: posOf(id) }))
       .sort((a, b) => (a.p ? a.p.ang : 2) - (b.p ? b.p.ang : 2));
     let off = 0;
     ent.forEach(s => {
@@ -266,7 +268,8 @@ function ringHTML(cats, o) {
       esc(money(n, o.cur, true)) +
       "</div>";
     let mid = "";
-    if (mode === "out") mid = big(o.spent, "") + (!o.spent ? '<div class="hint">' + TH("ring.tapCat") + "</div>" : "");
+    if (inc) mid = big(o.got, " in", "+") + (!o.got ? '<div class="hint">' + TH("ring.tapCat") + "</div>" : "");
+    else if (mode === "out") mid = big(o.spent, "") + (!o.spent ? '<div class="hint">' + TH("ring.tapCat") + "</div>" : "");
     else if (mode === "in") mid = big(o.got, " in", "+");
     else if (mode === "both")
       mid =

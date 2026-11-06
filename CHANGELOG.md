@@ -5,6 +5,22 @@ and versions follow [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Added
+
+- A Year view: Year joins Day, Range and Month in the period picker (Home and History), and Years joins Days, Weeks
+  and Months in the spending summary, with each year's categories compared with the year before.
+- Home: a Spending | Income switch above the ring. Income shows its own categories around the ring, in the same style, with each one's share of the income; a tap on a category adds income in it.
+- A category's transactions: in the summary sheet every category is now tappable and opens History on that period with only its entries, their count and total; History also has category chips (All categories + the ones with entries) to switch between them.
+- The summary sheet (tap the donut) also covers income: a Spending | Income switch, the same days / weeks / months / years, categories, comparison with the period before and average. "Open in Home" keeps the choice.
+- Italian (Italiano): the whole app, its notifications and widget, and the store listing. It follows the phone's language.
+- Settings → Home opens on: Day, Month or Year. Tally opens on that view, and the chip beside the balance (Today, This
+  month or This year) brings it back. It is kept in backups; a backup without it opens on the day, as before.
+
+### Fixed
+
+- The four-choice selectors (Day | Range | Month | Year and Days | Weeks | Months | Years) keep their longer words
+  whole on small phones at the largest text size.
+
 ## [1.4.3] — 2026-10-29
 
 ### Added

@@ -4,6 +4,7 @@
 "use strict";
 
 loadState();
+applyStart();
 applyTextScale();
 readSys();
 applyTheme();
