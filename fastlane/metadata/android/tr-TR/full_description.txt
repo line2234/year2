@@ -34,7 +34,7 @@ Hesap açmak yok, reklam yok, takip yok, internet gerekmez. Her şey telefonunda
 yedekle, yeni telefonda geri yükle ya da tüm kayıtları CSV olarak dışa aktar.
 
 SENİN DİLİNDE
-English, Español, Português (Brasil), Français, Deutsch, Русский, 简体中文, Bahasa Indonesia ve Türkçe: Tally
+English, Español, Italiano, Português (Brasil), Français, Deutsch, Русский, 简体中文, Bahasa Indonesia ve Türkçe: Tally
 telefonunun dilini kullanır; sayıları, tarihleri ve parayı telefonun nasıl yazıyorsa öyle yazar.
 
 Telefonunun Material You renklerine uyar, açık ve koyu temada.

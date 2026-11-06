@@ -40,6 +40,8 @@
   },
   "day": {
     "today": "Aujourd’hui",
+    "thisMonth": "Ce mois-ci",
+    "thisYear": "Cette année",
     "yesterday": "Hier",
     "tomorrow": "Demain"
   },
@@ -187,8 +189,11 @@
     "day": "Jour",
     "range": "Période",
     "month": "Mois",
+    "year": "Année",
     "prevYear": "Année précédente",
+    "prevYears": "Années précédentes",
     "nextYear": "Année suivante",
+    "nextYears": "Années suivantes",
     "rangeEnd": "Touchez maintenant le dernier jour",
     "rangeHint": "Faites glisser sur les jours, ou touchez le début puis la fin"
   },
@@ -479,6 +484,8 @@
     "addAccount": "Ajouter un compte",
     "accounts": "Comptes",
     "backToday": "Revenir à aujourd’hui",
+    "backMonth": "Revenir à ce mois-ci",
+    "backYear": "Revenir à cette année",
     "balance": "Solde",
     "entries_one": "{{count}} opération",
     "entries_many": "{{count}} d’opérations",
@@ -523,6 +530,7 @@
     "region": "Région",
     "choose": "Choisir",
     "week": "Premier jour de la semaine",
+    "start": "Accueil s’ouvre sur",
     "clock": "Format de l’heure",
     "h24": "24 heures",
     "h12": "12 heures",
@@ -571,37 +579,50 @@
     "mode": {
       "d": "Jours",
       "w": "Semaines",
-      "m": "Mois"
+      "m": "Mois",
+      "y": "Années"
     },
     "weekOf": "Semaine du {{date}}",
     "spent": "dépensé",
+    "got": "encaissé",
     "earlier": "Avant",
     "later": "Après",
     "same": {
       "d": "Comme la veille",
       "w": "Comme la semaine dernière",
-      "m": "Comme le mois dernier"
+      "m": "Comme le mois dernier",
+      "y": "Comme l’an dernier"
     },
     "up": {
       "d": "↑ {{pct}} par rapport à la veille",
       "w": "↑ {{pct}} par rapport à la semaine dernière",
-      "m": "↑ {{pct}} par rapport au mois dernier"
+      "m": "↑ {{pct}} par rapport au mois dernier",
+      "y": "↑ {{pct}} par rapport à l’an dernier"
     },
     "down": {
       "d": "↓ {{pct}} par rapport à la veille",
       "w": "↓ {{pct}} par rapport à la semaine dernière",
-      "m": "↓ {{pct}} par rapport au mois dernier"
+      "m": "↓ {{pct}} par rapport au mois dernier",
+      "y": "↓ {{pct}} par rapport à l’an dernier"
     },
     "avg": "{{amount}} par jour en moyenne",
     "none": {
       "d": "Rien dépensé ce jour-là.",
       "w": "Rien dépensé cette semaine-là.",
-      "m": "Rien dépensé en {{month}}."
+      "m": "Rien dépensé en {{month}}.",
+      "y": "Rien dépensé en {{year}}."
+    },
+    "noneIn": {
+      "d": "Rien encaissé ce jour-là.",
+      "w": "Rien encaissé cette semaine-là.",
+      "m": "Rien encaissé en {{month}}.",
+      "y": "Rien encaissé en {{year}}."
     },
     "open": {
       "d": "Ouvrir ce jour dans Accueil",
       "w": "Ouvrir cette semaine dans Accueil",
-      "m": "Ouvrir ce mois dans Accueil"
+      "m": "Ouvrir ce mois dans Accueil",
+      "y": "Ouvrir cette année dans Accueil"
     }
   },
   "nav": {
@@ -659,6 +680,7 @@
     "none": {
       "day": "Rien de noté ce jour-là.",
       "month": "Rien de noté ce mois-là.",
+      "year": "Rien de noté cette année-là.",
       "range": "Rien de noté sur ces jours."
     },
     "deleted_one": "{{count}} opération supprimée",

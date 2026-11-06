@@ -1,0 +1,43 @@
+Tally funziona come un quaderno tascabile per i tuoi soldi. Ogni mattina i tuoi saldi sono in cima alla pagina, annoti
+le spese della giornata con un solo tocco e tutto passa al giorno dopo.
+
+UN TOCCO PER OGNI SPESA
+Le tue categorie di spesa circondano un grafico ad anello con quello che hai speso oggi. Tocca una categoria, scrivi
+l’importo e salva. La calcolatrice integrata risolve al volo somme come 12 + 4,50. Annota a chi hai pagato o chi ti ha
+pagato: i nomi che hai già usato compaiono mentre scrivi.
+
+OGNI CONTO, OGNI VALUTA
+Conti bancari, portafogli digitali, contanti, carte di credito e risparmi, ognuno nella sua valuta: una qualsiasi tra
+le valute del mondo.
+
+GIROCONTI CHE NON CONTANO MAI COME SPESA
+Sposta denaro tra i tuoi conti, anche tra valute diverse, e aggiungi la commissione dello sportello o del prelievo
+quando c’è.
+
+CORREGGI UN SALDO IN POCHI SECONDI
+Se un conto non corrisponde a quello che hai davvero, scrivi l’importo reale e Tally registra la differenza.
+
+DEBITI E PRESTITI
+Tieni il conto dei soldi che ti hanno prestato o che hai prestato tu: più importi per persona, date di rientro,
+pagamenti parziali (con le loro commissioni), promemoria e prestiti dati per persi. Guarda il tuo patrimonio nelle
+schede Attività e Passività.
+
+GUARDA INDIETRO
+Storico di qualsiasi giorno, periodo o mese, con il saldo di ogni conto dopo ogni movimento. Tocca il grafico per
+vedere gli ultimi 7 giorni, 8 settimane o un mese per categoria.
+
+PROMEMORIA E UN WIDGET
+Un avviso la sera se oggi non hai annotato niente, promemoria per le scadenze e un widget per la schermata Home con il
+saldo di oggi, le spese di oggi e un pulsante per aggiungere al volo.
+
+I TUOI DATI SONO TUOI
+Nessun account, nessuna pubblicità, nessun tracciamento e nessun bisogno di internet. Tutto resta sul tuo telefono.
+Fai una copia in un file quando vuoi, ripristinala su un telefono nuovo o esporta tutti i movimenti in CSV.
+
+NELLA TUA LINGUA
+English, Español, Italiano, Português (Brasil), Français, Deutsch, Русский, 简体中文, Bahasa Indonesia e Türkçe: Tally
+segue la lingua del tuo telefono e scrive numeri, date e denaro come fa il tuo telefono.
+
+Usa i colori Material You del tuo telefono, in modalità chiara e scura.
+
+Open source (MIT): https://github.com/IamAndelib/Tally-android

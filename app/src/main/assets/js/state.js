@@ -19,6 +19,7 @@ function blank() {
       haptics: true,
       hapticLevel: 3,
       donut: "both",
+      start: "day",
       remind: { daily: true, time: "21:00", dues: true, dueTime: "09:00", check: true, checkTime: "08:00" },
       backup: { on: false, time: "23:00" },
     },
@@ -136,6 +137,7 @@ function migrate(o) {
   s.settings.haptics = s.settings.haptics !== false;
   s.settings.hapticLevel = Math.min(5, Math.max(1, Math.round(num(s.settings.hapticLevel)) || 3));
   if (!DONUT_MODES.includes(s.settings.donut)) s.settings.donut = "both";
+  if (!START_VIEWS.includes(s.settings.start)) s.settings.start = "day"; // Home opens on: day, month or year
   ["lastAcc", "lastAccIn"].forEach(k => {
     if (s.settings[k] != null) s.settings[k] = sid(s.settings[k]);
   });

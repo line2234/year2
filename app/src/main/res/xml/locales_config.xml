@@ -8,6 +8,7 @@
     <locale android:name="fr" />
     <!-- Indonesian under its older code, as Android's own sample writes it (values-in) -->
     <locale android:name="in" />
+    <locale android:name="it" />
     <locale android:name="pt-BR" />
     <locale android:name="ru" />
     <locale android:name="tr" />

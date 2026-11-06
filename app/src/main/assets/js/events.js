@@ -180,6 +180,13 @@ document.addEventListener("click", ev => {
     case "pd-month":
       setPeriod({ period: "month", anchor: v + "-01" });
       break;
+    case "pd-yrs":
+      PD.yEnd = Math.min(PD.yEnd + 12 * +v, +today().slice(0, 4));
+      pdRender();
+      break;
+    case "pd-yr":
+      setPeriod({ period: "year", anchor: v + "-01-01" });
+      break;
     case "pd-today":
       setPeriod({ period: "day", anchor: today() }); // always today's figures, whichever tab is open
       break;
@@ -199,8 +206,7 @@ document.addEventListener("click", ev => {
       break;
     }
     case "go-today":
-      V.period = "day";
-      V.anchor = today();
+      applyStart(); // the view Home opens on, with today in it
       render();
       break;
     case "prev":
@@ -247,6 +253,13 @@ document.addEventListener("click", ev => {
     case "summary":
       summarySheet();
       break;
+    case "sm-kind":
+      SM.kind = v === "in" ? "in" : "out";
+      SM.sel = null;
+      setPressed("sm-kind", v);
+      $("#sheet h2").textContent = smTitle();
+      smRender();
+      break;
     case "sm-mode":
       SM.mode = v;
       SM.sel = null;
@@ -270,7 +283,11 @@ document.addEventListener("click", ev => {
       txSheet(null, "income");
       break;
     case "add-cat":
-      txSheet(null, "expense", v);
+      txSheet(null, V.kind === "in" ? "income" : "expense", v);
+      break;
+    case "ring-kind":
+      V.kind = v === "in" ? "in" : "out";
+      render();
       break;
     case "tx-open":
       openEntry(v);
@@ -443,6 +460,10 @@ document.addEventListener("click", ev => {
       break;
     case "week":
       S.settings.week = +v;
+      commit();
+      break;
+    case "start":
+      S.settings.start = START_VIEWS.includes(v) ? v : "day";
       commit();
       break;
     case "clock":

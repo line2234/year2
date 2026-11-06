@@ -40,6 +40,8 @@
   },
   "day": {
     "today": "Hoje",
+    "thisMonth": "Este mês",
+    "thisYear": "Este ano",
     "yesterday": "Ontem",
     "tomorrow": "Amanhã"
   },
@@ -187,8 +189,11 @@
     "day": "Dia",
     "range": "Intervalo",
     "month": "Mês",
+    "year": "Ano",
     "prevYear": "Ano anterior",
+    "prevYears": "Anos anteriores",
     "nextYear": "Próximo ano",
+    "nextYears": "Anos seguintes",
     "rangeEnd": "Agora toque no último dia",
     "rangeHint": "Arraste pelos dias, ou toque no início e depois no fim"
   },
@@ -479,6 +484,8 @@
     "addAccount": "Adicionar uma conta",
     "accounts": "Contas",
     "backToday": "Voltar para hoje",
+    "backMonth": "Voltar para este mês",
+    "backYear": "Voltar para este ano",
     "balance": "Saldo",
     "entries_one": "{{count}} lançamento",
     "entries_many": "{{count}} lançamentos",
@@ -523,6 +530,7 @@
     "region": "Região",
     "choose": "Escolher",
     "week": "Primeiro dia da semana",
+    "start": "O Início abre em",
     "clock": "Formato da hora",
     "h24": "24 horas",
     "h12": "12 horas",
@@ -571,37 +579,50 @@
     "mode": {
       "d": "Dias",
       "w": "Semanas",
-      "m": "Meses"
+      "m": "Meses",
+      "y": "Anos"
     },
     "weekOf": "Semana de {{date}}",
     "spent": "gasto",
+    "got": "recebido",
     "earlier": "Antes",
     "later": "Depois",
     "same": {
       "d": "Igual ao dia anterior",
       "w": "Igual à semana passada",
-      "m": "Igual ao mês passado"
+      "m": "Igual ao mês passado",
+      "y": "Igual ao ano passado"
     },
     "up": {
       "d": "↑ {{pct}} vs. dia anterior",
       "w": "↑ {{pct}} vs. semana passada",
-      "m": "↑ {{pct}} vs. mês passado"
+      "m": "↑ {{pct}} vs. mês passado",
+      "y": "↑ {{pct}} vs. ano passado"
     },
     "down": {
       "d": "↓ {{pct}} vs. dia anterior",
       "w": "↓ {{pct}} vs. semana passada",
-      "m": "↓ {{pct}} vs. mês passado"
+      "m": "↓ {{pct}} vs. mês passado",
+      "y": "↓ {{pct}} vs. ano passado"
     },
     "avg": "Média de {{amount}} por dia",
     "none": {
       "d": "Nada gasto nesse dia.",
       "w": "Nada gasto nessa semana.",
-      "m": "Nada gasto em {{month}}."
+      "m": "Nada gasto em {{month}}.",
+      "y": "Nada gasto em {{year}}."
+    },
+    "noneIn": {
+      "d": "Nada recebido nesse dia.",
+      "w": "Nada recebido nessa semana.",
+      "m": "Nada recebido em {{month}}.",
+      "y": "Nada recebido em {{year}}."
     },
     "open": {
       "d": "Abrir este dia no Início",
       "w": "Abrir esta semana no Início",
-      "m": "Abrir este mês no Início"
+      "m": "Abrir este mês no Início",
+      "y": "Abrir este ano no Início"
     }
   },
   "nav": {
@@ -659,6 +680,7 @@
     "none": {
       "day": "Nada anotado nesse dia.",
       "month": "Nada anotado nesse mês.",
+      "year": "Nada anotado nesse ano.",
       "range": "Nada anotado nesses dias."
     },
     "deleted_one": "{{count}} lançamento excluído",

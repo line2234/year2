@@ -31,6 +31,7 @@ const panes = (left, right, cls) =>
       "</div>";
 /* the ring's width: its pane on a wide screen (measured on an empty pane pair), else the column */
 let RINGW = 0;
+const KINDH = 56; /* the Spending | Income switch above the ring: 48px and its margin */
 /* the screen, drawn anew; the control that had the focus gets it back (keepFocus), and the same screen keeps the row
    that was in view where it was (rowAnchor) */
 let drawnScreen = "";
@@ -100,7 +101,7 @@ function drawScreen() {
        it stay on screen (screen height, not the window's: the keyboard of a sheet just saved must not shrink it) */
     RINGW = land
       ? Math.max(240, Math.min(pw, innerHeight - 12))
-      : Math.max(300, Math.min(pw, ((screen && screen.availHeight) || innerHeight) - 400));
+      : Math.max(300, Math.min(pw, ((screen && screen.availHeight) || innerHeight) - 400 - KINDH));
   }
   if (V.screen === "history") app.innerHTML = historyView();
   else if (V.screen === "assets") app.innerHTML = assetsView();
@@ -263,27 +264,57 @@ function homeView() {
   const pt = periodTxns().filter(t => inCur(t, cur));
   let spent = 0,
     got = 0;
-  const by = {};
+  const by = {},
+    byIn = {};
   pt.forEach(t => {
     if (isSpend(t)) {
       spent += t.amount;
       by[t.cat] = (by[t.cat] || 0) + t.amount;
-    } else if (t.type === "income") got += t.amount;
+    } else if (t.type === "income") {
+      got += t.amount;
+      byIn[t.cat] = (byIn[t.cat] || 0) + t.amount;
+    }
   });
   spent = rnd(spent);
   got = rnd(got);
-  const ring = ringHTML(outCats(), { mode: "home", by, spent, got, cur });
+  /* the ring shows spending or income (the switch above it), in the same style */
+  const kind = V.kind === "in" ? "in" : "out";
+  const kindBar =
+    '<div class="seg kind">' +
+    ["out", "in"]
+      .map(k => '<button data-act="ring-kind" data-v="' + k + '" aria-pressed="' + (k === kind) + '">' + TH("donut." + k) + "</button>")
+      .join("") +
+    "</div>";
+  const land = document.body.classList.contains("land");
+  /* sideways phone: the ring fills the pane's height, so the switch goes to the top of the other pane */
+  const ring =
+    (land ? "" : kindBar) +
+    ringHTML(kind === "in" ? inCats() : outCats(), {
+      mode: "home",
+      kind,
+      by: kind === "in" ? byIn : by,
+      spent,
+      got,
+      cur,
+    });
 
   const total = balanceIn(cur, b);
   const n = periodTxns().length;
-  if (!(V.period === "day" && V.anchor === today()))
+  if (!onStartView()) {
+    /* back to the view Home opens on: today, this month or this year */
+    const [back, name] = {
+      day: ["home.backToday", "day.today"],
+      month: ["home.backMonth", "day.thisMonth"],
+      year: ["home.backYear", "day.thisYear"],
+    }[startView()];
     h +=
       '<div class="todayrow"><button class="todaychip" data-act="go-today" aria-label="' +
-      TH("home.backToday") +
+      TH(back) +
       '">' +
       ic("reset") +
-      TH("day.today") +
+      TH(name) +
       "</button></div>";
+  }
   h +=
     '<button class="balbar" data-act="entries">' +
     ic("list") +
@@ -322,7 +353,7 @@ function homeView() {
   /* one column: ring, then the buttons; tablet: ring and buttons | the rest; sideways phone: the ring, the full height
      of the screen | the app bar, buttons and the rest, the ring staying in view while the right side scrolls */
   if (!wide) return top + ring + h;
-  return document.body.classList.contains("land") ? panes(ring, top + h + side, "home") : top + panes(ring + h, side);
+  return land ? panes(ring, kindBar + top + h + side, "home") : top + panes(ring + h, side);
 }
 /* the Home balance card: from the Balance check time on, while that reminder is on, until confirmed today; opened from
    its notification (checkAsked = that day), it shows whatever the time */
@@ -999,6 +1030,15 @@ function settingsView() {
       )
       .join("") +
     "</div>";
+  h +=
+    '<div class="sec">' +
+    TH("settings.start") +
+    "</div>" +
+    seg(
+      "start",
+      startView(),
+      START_VIEWS.map(k => [k, T("period." + k)])
+    );
   h +=
     '<div class="sec">' +
     TH("settings.region") +
